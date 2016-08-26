@@ -1,5 +1,5 @@
 {
-    "name": "boekkooi/jquery-validation-bundle",
+    "name": "ikselll/jquery-validation-bundle",
     "type": "symfony-bundle",
     "keywords": [ "jquery", "form", "validation", "validator", "symfony", "twig"],
     "description": "Jquery form validation bundle for symfony 2",
