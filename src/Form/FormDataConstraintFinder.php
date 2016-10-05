@@ -186,7 +186,7 @@ class FormDataConstraintFinder
 
             foreach ($metadata->getConstraints() as $parentConstraint) {
                 $parentConstraintName = (new \ReflectionClass($parentConstraint))->getShortName();
-                if ($parentConstraintName = $constraint->getConstraintName()) {
+                if (strcmp($parentConstraintName, $constraint->getConstraintName()) === 0) {
                     $constraints[] = $parentConstraint;
                 }
             }
