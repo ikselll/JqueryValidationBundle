@@ -179,12 +179,14 @@ class FormDataConstraintFinder
         $constraints = [];
 
         foreach ($propertyMetadata->getConstraints() as $constraint) {
-            if (get_class($constraint) == ValidateByParent::class) {
-                foreach ($metadata->getConstraints() as $parentConstraint) {
-                    $shortName = (new \ReflectionClass($parentConstraint))->getShortName();
-                    if ($shortName = $constraint->getConstraintName()) {
-                        $constraints[] = $parentConstraint;
-                    }
+            if (strcmp(get_class($constraint), ValidateByParent::class) != 0) {
+                continue;
+            }
+
+            foreach ($metadata->getConstraints() as $parentConstraint) {
+                $shortName = (new \ReflectionClass($parentConstraint))->getShortName();
+                if ($shortName = $constraint->getConstraintName()) {
+                    $constraints[] = $parentConstraint;
                 }
             }
         }
