@@ -179,7 +179,7 @@ class FormDataConstraintFinder
         $constraints = [];
 
         foreach ($propertyMetadata->getConstraints() as $constraint) {
-            if (strcmp(get_class($constraint), ValidateByParent::class) != 0) {
+            if (strcmp(get_class($constraint), ValidateByParent::class) !== 0) {
                 continue;
             }
 

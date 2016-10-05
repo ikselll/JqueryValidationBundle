@@ -7,6 +7,7 @@ use Symfony\Component\Validator\Constraint;
 /**
  * validateByParent
  *
+ * @Annotation
  * @author Arkadiusz Kubaczkowski <arkadiusz.kubaczkowski@pixers.pl>
  */
 class ValidateByParent extends Constraint
@@ -14,12 +15,12 @@ class ValidateByParent extends Constraint
     /**
      * @var string
      */
-    protected $constraint;
+    protected $constraintName;
 
     /**
-     * @var string
+     * @return string
      */
     public function getConstraintName() {
-        return $this->constraint;
+        return $this->constraintName;
     }
 }
