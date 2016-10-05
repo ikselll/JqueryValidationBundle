@@ -12,5 +12,10 @@ use Symfony\Component\Validator\ConstraintValidator;
  */
 class ValidateByParentValidator extends ConstraintValidator
 {
+    /**
+     * @param string $value
+     * @param Constraint $constraint
+     * @return void
+     */
    public function validate($value, Constraint $constraint) {}
 }

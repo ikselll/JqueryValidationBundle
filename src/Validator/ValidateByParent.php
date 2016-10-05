@@ -11,8 +11,14 @@ use Symfony\Component\Validator\Constraint;
  */
 class ValidateByParent extends Constraint
 {
+    /**
+     * @var string
+     */
     protected $constraint;
 
+    /**
+     * @var string
+     */
     public function getConstraintName() {
         return $this->constraint;
     }
