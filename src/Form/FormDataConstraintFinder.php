@@ -3,6 +3,7 @@ namespace Boekkooi\Bundle\JqueryValidationBundle\Form;
 
 use Boekkooi\Bundle\JqueryValidationBundle\Exception\UnsupportedException;
 use Boekkooi\Bundle\JqueryValidationBundle\Validator\ConstraintCollection;
+use Boekkooi\Bundle\JqueryValidationBundle\Validator\ValidateByParent;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Validator\Constraints\Type;
 use Symfony\Component\Validator\Constraints\Valid;
@@ -155,13 +156,40 @@ class FormDataConstraintFinder
                 continue;
             }
 
+            $constraintsWithParents = $this->addParentValidations($propertyMetadata, $metadata);
+            $constraints = array_merge($constraintsWithParents, $propertyMetadata->getConstraints());
+
             // Add the actual constraints
             $constraintCollection->addCollection(
-                new ConstraintCollection($propertyMetadata->getConstraints())
+                new ConstraintCollection($constraints)
             );
         }
 
         return $constraintCollection;
+    }
+
+    /**
+     * Gets parent constraints.
+     *
+     * @param MemberMetadata $propertyMetadata
+     * @param ClassMetadata $metadata
+     * @return array
+     */
+    protected function addParentValidations(MemberMetadata $propertyMetadata, ClassMetadata $metadata) {
+        $constraints = [];
+
+        foreach ($propertyMetadata->getConstraints() as $constraint) {
+            if (get_class($constraint) == ValidateByParent::class) {
+                foreach ($metadata->getConstraints() as $parentConstraint) {
+                    $shortName = (new \ReflectionClass($parentConstraint))->getShortName();
+                    if ($shortName = $constraint->getConstraintName()) {
+                        $constraints[] = $parentConstraint;
+                    }
+                }
+            }
+        }
+
+        return $constraints;
     }
 
     /**
