@@ -156,8 +156,8 @@ class FormDataConstraintFinder
                 continue;
             }
 
-            $constraintsWithParents = $this->addParentValidations($propertyMetadata, $metadata);
-            $constraints = array_merge($constraintsWithParents, $propertyMetadata->getConstraints());
+            $constraintsFromParents = $this->addParentValidations($propertyMetadata, $metadata);
+            $constraints = array_merge($constraintsFromParents, $propertyMetadata->getConstraints());
 
             // Add the actual constraints
             $constraintCollection->addCollection(
@@ -175,7 +175,8 @@ class FormDataConstraintFinder
      * @param ClassMetadata $metadata
      * @return array
      */
-    protected function addParentValidations(MemberMetadata $propertyMetadata, ClassMetadata $metadata) {
+    protected function addParentValidations(MemberMetadata $propertyMetadata, ClassMetadata $metadata) 
+    {
         $constraints = [];
 
         foreach ($propertyMetadata->getConstraints() as $constraint) {
@@ -184,8 +185,8 @@ class FormDataConstraintFinder
             }
 
             foreach ($metadata->getConstraints() as $parentConstraint) {
-                $shortName = (new \ReflectionClass($parentConstraint))->getShortName();
-                if ($shortName = $constraint->getConstraintName()) {
+                $parentConstraintName = (new \ReflectionClass($parentConstraint))->getShortName();
+                if ($parentConstraintName = $constraint->getConstraintName()) {
                     $constraints[] = $parentConstraint;
                 }
             }

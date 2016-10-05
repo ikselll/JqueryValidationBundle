@@ -20,7 +20,8 @@ class ValidateByParent extends Constraint
     /**
      * @return string
      */
-    public function getConstraintName() {
+    public function getConstraintName() 
+    {
         return $this->constraintName;
     }
 }
